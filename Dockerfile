@@ -3,11 +3,11 @@ LABEL maintainer="Ben Oram <b@oram.co>"
 
 RUN apt-get update && \
     apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install && \
-    apt-get install -y tini python3 python3-pip git && \
+    apt-get install -y --no-install-recommends tini python3 python3-pip git && \
+    pip3 install cruft && \
+    apt-get remove -y python-pip && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean 
-
-RUN pip3 install cruft
 
 WORKDIR /data
 
